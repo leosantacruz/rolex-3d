@@ -36,7 +36,7 @@ iframe{
 #contenido {
   width: 40%;
   position: absolute;
-  top: 120px;
+height: 100vh;
   left: 60px;
   color: #fff;
   z-index: 4;
@@ -50,6 +50,11 @@ iframe{
 #contenido p,
 #contenido h1 {
   color: #fff;
+}
+.flex-center{
+    display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .button {
   margin-top: 20px;
@@ -107,8 +112,10 @@ iframe{
   justify-content: center;
   align-items: center;
 }
+#lastStep h1:hover{
+  cursor:pointer
+}
 #lastStep h1 {
-  transition: all 1s linear;
   font-size: 25px;
 }
 #logos {

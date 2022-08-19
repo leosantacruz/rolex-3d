@@ -3,14 +3,25 @@
   <div>
     <div v-show="isLoaded">
       <div id="logos">
-        <a href=""><img src="/img/ibisdev.svg" width="70" /></a>
-        <a href=""> <img src="/img/bieffe.png" width="70" /></a>
+        <a target="_blank" href="https://ibisdev.tech/"
+          ><img src="/img/ibisdev.svg" width="70"
+        /></a>
+        <a target="_blank" href="https://www.biefferendering.com/">
+          <img src="/img/bieffe.png" width="70"
+        /></a>
       </div>
       <Transition name="slide-fade">
-        <div id="contenido" :key="currentStep" v-if="currentStep < 2">
-          <h1>{{ contenido[currentStep].titulo }}</h1>
-          <p>{{ contenido[currentStep].descripcion }}</p>
-          <div class="button" @click="nextStep">Continue</div>
+        <div
+          id="contenido"
+          class="flex-center"
+          :key="currentStep"
+          v-if="currentStep < 2"
+        >
+          <div>
+            <h1>{{ contenido[currentStep].titulo }}</h1>
+            <p>{{ contenido[currentStep].descripcion }}</p>
+            <div class="button" @click="nextStep">Continue</div>
+          </div>
         </div>
       </Transition>
 
