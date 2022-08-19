@@ -28,16 +28,17 @@
       <Transition name="out-fade">
         <div v-if="currentStep == 2" id="lastStep" @click="hideHint()">
           <h1>{{ contenido[currentStep].titulo }}</h1>
+          <div class="button">Click to interact</div>
         </div>
       </Transition>
 
-      <div id="buttons">
+      <!-- <div id="buttons">
         <button @click="getCamera">Get camera</button>
         <button @click="setCamera('out', 2)">out</button>
         <button @click="setCamera('front', 2)">front</button>
         <button @click="setCamera('closeside', 2)">close side</button>
         <button @click="setCamera('side', 2)">side</button>
-      </div>
+      </div> -->
 
       <Transition name="out-fade">
         <div
@@ -45,13 +46,14 @@
           class="button"
           id="restartBtn"
           @click="restart()"
+          @touchstart="restart()"
         >
           Restart
         </div>
       </Transition>
       <iframe
         title="Ibisdev demo"
-        :class="{ noClickeable: currentStep < 99 }"
+        :class="{ noClickeable: currentStep < 99, blur: currentStep == 1 }"
         src=""
         id="api-frame"
       ></iframe>
@@ -88,7 +90,7 @@ export default {
         },
         {
           titulo: "Dynamic imaging of products",
-          descripcion: "Manipulate the item asi it were real",
+          descripcion: "Fully apreciate the details of luxury items",
           nextCamera: "side",
         },
         {

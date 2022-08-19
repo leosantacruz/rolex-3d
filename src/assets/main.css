@@ -4,7 +4,7 @@ body,html{
   margin:0;
 overflow: hidden;
 font-family: 'Lora', serif;
-
+background-color:rgba(0, 0, 0, 0.6);
 
 }
 iframe{
@@ -111,6 +111,7 @@ height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 #lastStep h1:hover{
   cursor:pointer
@@ -149,4 +150,22 @@ height: 100vh;
   position:absolute;
   right: 20px;
   top: 0px;
+}
+
+
+
+@media (max-width: 900px) {
+  .blur{
+  filter:blur(4px)
+}
+  #contenido p {
+  opacity: 0.9;
+}
+  #contenido h1{font-size: 40px;}
+  #restartBtn{
+    z-index:20;
+    top:inherit;
+    left: inherit;
+    right: 20px;
+    bottom: 10px; }
 }
