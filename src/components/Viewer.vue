@@ -3,8 +3,8 @@
   <div>
     <div v-show="isLoaded">
       <div id="logos">
-        <a href=""><img src="img/ibisdev.svg" width="70" /></a>
-        <a href=""> <img src="img/bieffe.png" width="70" /></a>
+        <a href=""><img src="/img/ibisdev.svg" width="70" /></a>
+        <a href=""> <img src="/img/bieffe.png" width="70" /></a>
       </div>
       <Transition name="slide-fade">
         <div id="contenido" :key="currentStep" v-if="currentStep < 2">
