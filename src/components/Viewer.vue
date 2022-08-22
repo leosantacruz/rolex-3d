@@ -1,6 +1,14 @@
 
  <template>
   <div>
+    <!-- <div id="buttons">
+        <button @click="getCamera">Get camera</button>
+        <button @click="setCamera('out', 2)">out</button>
+        <button @click="setCamera('front', 2)">front</button>
+        <button @click="setCamera('closeside', 2)">close side</button>
+        <button @click="setCamera('side', 2)">side</button>
+      </div> -->
+
     <div v-show="isLoaded">
       <div id="logos">
         <a target="_blank" href="https://ibisdev.tech/"
@@ -31,14 +39,6 @@
           <div class="button">Click to interact</div>
         </div>
       </Transition>
-
-      <!-- <div id="buttons">
-        <button @click="getCamera">Get camera</button>
-        <button @click="setCamera('out', 2)">out</button>
-        <button @click="setCamera('front', 2)">front</button>
-        <button @click="setCamera('closeside', 2)">close side</button>
-        <button @click="setCamera('side', 2)">side</button>
-      </div> -->
 
       <Transition name="out-fade">
         <div
@@ -73,6 +73,9 @@
 </template>
 
 <script>
+import camerasPosition from "./config/cameraPositions";
+import contenido from "./config/contenido";
+import sketchfabConfig from "./config/sketchfabConfig";
 export default {
   name: "Viewer",
   data() {
@@ -81,31 +84,14 @@ export default {
       loadingProgress: 1300,
       api: "",
       currentStep: 0,
-      contenido: [
-        {
-          titulo: "Interactive visuals for watches and jewels",
-          descripcion:
-            "Real time 3d rendering for institutional and ecommerce websites",
-          nextCamera: "closeside",
-        },
-        {
-          titulo: "Dynamic imaging of products",
-          descripcion: "Fully apreciate the details of luxury items",
-          nextCamera: "side",
-        },
-        {
-          titulo: "Manipulate the item as it were real",
-          descripcion: "",
-          nextCamera: "front",
-        },
-      ],
+      contenido: contenido,
     };
   },
   mounted() {
-    var version = "1.10.1";
-    var uid = "897a00cc1d564033968004b0e5fe5d20"; //3D MODEL
-    var iframe = document.getElementById("api-frame");
-    var client = new window.Sketchfab(version, iframe);
+    const version = "1.10.1";
+    const uid = "897a00cc1d564033968004b0e5fe5d20"; //3D MODEL
+    const iframe = document.getElementById("api-frame");
+    const client = new window.Sketchfab(version, iframe);
 
     client.init(uid, {
       success: (api) => {
@@ -122,23 +108,20 @@ export default {
           api.addEventListener("viewerready", () => {
             this.setCamera("out", 0.3);
             this.isLoaded = true;
+            api.getMaterialList((err, mat) => {
+              let metal = mat[0];
+
+              let color = [0, 255, 0];
+              metal.channels.DiffuseColor.color = color;
+              api.setMaterial(metal, function () {});
+            });
             setTimeout(() => {
               this.setCamera("front", 2);
             }, 1200);
           });
         });
       },
-      autostart: 1,
-      ui_controls: false,
-      ui_general_controls: false,
-      ui_help: false,
-      ui_hint: 0,
-      ui_infos: false,
-      ui_settings: false,
-      ui_watermark: false,
-      ui_stop: false,
-      ui_color: "ffffff",
-      orbit_constraint_pan: false,
+      ...sketchfabConfig,
     });
   },
   methods: {
@@ -166,55 +149,9 @@ export default {
       });
     },
     setCamera(camera, duration) {
-      const cameras = {
-        out: {
-          position: [
-            0.0041586988897073145, 0.02052001778172866, -0.002317945905515299,
-          ],
-          target: [
-            -0.00583113856131546, 0.01406527311730921, 0.0000995020792399354,
-          ],
-        },
-        front: {
-          position: [
-            0.3499382751832953, -0.4665291751858327, -0.11746574518396861,
-          ],
-          target: [
-            -0.04232865973745763, -0.04365417923306779, 0.00011192461729403066,
-          ],
-        },
-
-        closeside: {
-          position: [
-            0.06388709610435853, -0.22891768096209997, -0.08407767097896611,
-          ],
-          target: [
-            -0.03624468578937616, -0.019989491929537147, 0.014326623618445972,
-          ],
-        },
-        side: {
-          position: [
-            0.7181416724424008, 0.012381204390448368, -0.01802795989055816,
-          ],
-          target: [
-            0.0029771479771914296, 0.0008249995827618573,
-            -0.0010976950763200643,
-          ],
-        },
-
-        last: {
-          position: [
-            0.022919603241496694, -0.7143408962616135, 0.0034318401018280263,
-          ],
-          target: [
-            0.0029771479771914305, 0.0008249995827618578,
-            -0.0010976950763200647,
-          ],
-        },
-      };
       this.api.setCameraLookAt(
-        cameras[camera].position,
-        cameras[camera].target,
+        camerasPosition[camera].position,
+        camerasPosition[camera].target,
         duration
       );
     },
