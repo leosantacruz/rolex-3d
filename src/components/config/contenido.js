@@ -11,7 +11,7 @@ const contenido = [
         nextCamera: "side",
     },
     {
-        titulo: "Manipulate the item as it were real",
+        titulo: "Manipulate the item as if it were real",
         descripcion: "",
         nextCamera: "front",
     },
