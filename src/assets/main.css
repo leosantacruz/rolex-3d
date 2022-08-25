@@ -26,12 +26,7 @@ iframe{
   color: none;
   background: none;
 }
-#buttons {
-  position: absolute;
-  z-index: 1000;
-  top: 20px;
-  left: 20px;
-}
+
 #contenido {
   width: 40%;
   position: absolute;
@@ -166,4 +161,22 @@ height: 100vh;
     left: inherit;
     right: 20px;
     bottom: 10px; }
+}
+
+
+
+/* DEBUG MODE */
+#debug {
+  background-color:rgba(0,0,0,0.9);
+  padding: 20px;
+  color:#FFF;
+  position: absolute;
+  z-index: 1000;
+  top: 20px;
+margin: 20px;
+  width:calc( 100% - 40px);
+  box-sizing: border-box;
+}
+#debug button{
+  padding: 10px;
 }
