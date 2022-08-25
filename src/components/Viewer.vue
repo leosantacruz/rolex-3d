@@ -1,13 +1,13 @@
 
  <template>
   <div>
-    <!-- <div id="buttons">
-        <button @click="getCamera">Get camera</button>
-        <button @click="setCamera('out', 2)">out</button>
-        <button @click="setCamera('front', 2)">front</button>
-        <button @click="setCamera('closeside', 2)">close side</button>
-        <button @click="setCamera('side', 2)">side</button>
-      </div> -->
+    <div id="buttons" v-if="debugMode">
+      <button @click="getCamera">Get camera</button>
+      <button @click="setCamera('out', 2)">out</button>
+      <button @click="setCamera('front', 2)">front</button>
+      <button @click="setCamera('closeside', 2)">close side</button>
+      <button @click="setCamera('side', 2)">side</button>
+    </div>
 
     <div v-show="isLoaded">
       <div id="logos">
@@ -76,6 +76,7 @@
 import camerasPosition from "./config/cameraPositions";
 import contenido from "./config/contenido";
 import sketchfabConfig from "./config/sketchfabConfig";
+
 export default {
   name: "Viewer",
   data() {
@@ -85,6 +86,7 @@ export default {
       api: "",
       currentStep: 0,
       contenido: contenido,
+      debugMode: false,
     };
   },
   mounted() {
@@ -92,6 +94,13 @@ export default {
     const uid = "897a00cc1d564033968004b0e5fe5d20"; //3D MODEL
     const iframe = document.getElementById("api-frame");
     const client = new window.Sketchfab(version, iframe);
+
+    let uri = window.location.search.substring(1);
+    let params = new URLSearchParams(uri);
+
+    if (params.get("debug")) {
+      this.debugMode = true;
+    }
 
     client.init(uid, {
       success: (api) => {
@@ -149,9 +158,11 @@ export default {
       });
     },
     setCamera(camera, duration) {
+      let device =
+        typeof screen.orientation !== "undefined" ? "desktop" : "mobile";
       this.api.setCameraLookAt(
-        camerasPosition[camera].position,
-        camerasPosition[camera].target,
+        camerasPosition[device][camera].position,
+        camerasPosition[device][camera].target,
         duration
       );
     },
