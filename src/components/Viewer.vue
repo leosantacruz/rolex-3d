@@ -7,6 +7,8 @@
       <button @click="setCamera('front', 2)">front</button>
       <button @click="setCamera('closeside', 2)">close side</button>
       <button @click="setCamera('side', 2)">side</button>
+      <button @click="changeColor('silver')">silver</button>
+      <button @click="changeColor('gold')">gold</button>
       <hr />
       Device: {{ device }}
     </div>
@@ -43,16 +45,23 @@
       </Transition>
 
       <Transition name="out-fade">
-        <div
-          v-if="currentStep == 99"
-          class="button"
-          id="restartBtn"
-          @click="restart()"
-          @touchstart="restart()"
-        >
-          Restart
+        <div v-if="currentStep == 99">
+          <div
+            class="button"
+            id="restartBtn"
+            @click="restart()"
+            @touchstart="restart()"
+          >
+            Restart
+          </div>
+
+          <div id="colorEditor">
+            <div class="color silver" @click="changeColor('silver')"></div>
+            <div class="color gold" @click="changeColor('gold')"></div>
+          </div>
         </div>
       </Transition>
+
       <iframe
         title="Ibisdev demo"
         :class="{ noClickeable: currentStep < 99, blur: currentStep == 1 }"
@@ -60,6 +69,7 @@
         id="api-frame"
       ></iframe>
     </div>
+
     <div v-show="!isLoaded" id="loading">
       <svg
         width="174"
@@ -90,6 +100,7 @@ export default {
       contenido: contenido,
       debugMode: false,
       device: "",
+      materials: null,
     };
   },
   mounted() {
@@ -121,11 +132,7 @@ export default {
             this.setCamera("out", 0.3);
             this.isLoaded = true;
             api.getMaterialList((err, mat) => {
-              let metal = mat[0];
-
-              let color = [0, 255, 0];
-              metal.channels.DiffuseColor.color = color;
-              api.setMaterial(metal, function () {});
+              this.materials = mat;
             });
             setTimeout(() => {
               this.setCamera("front", 2);
@@ -160,7 +167,35 @@ export default {
         window.console.log(camera.target); // [x, y, z]
       });
     },
+    changeColor(color) {
+      let factor = 300;
+      let listColors = {
+        silver: [1, 1, 1],
+        gold: [0.6870308121546249, 0.5731588750675233, 0.2801243652610849],
+      };
 
+      // let texture = true;
+      // let oldColor = listColors[color];
+      // let newColor = [0, 0, 0];
+      // if (color == "gold") {
+      //   texture = false;
+      //   for (let n = 0; n < oldColor.length; n++) {
+      //     newColor[n] = Math.pow(oldColor[n] / 255, 2.2); // with gamma conversion
+      //   }
+      // }
+      // console.log(newColor);
+
+      let listModelNodes = [0, 1];
+      let currentMaterial;
+      listModelNodes.forEach((r) => {
+        currentMaterial = JSON.parse(JSON.stringify(this.materials))[r];
+        currentMaterial.channels.AlbedoPBR.texture = false;
+        currentMaterial.channels.AlbedoPBR.factor = 1;
+        currentMaterial.channels.AlbedoPBR.color = listColors[color];
+        currentMaterial.channels.AlbedoPBR.enable = true;
+        this.api.setMaterial(currentMaterial);
+      });
+    },
     mobileCheck() {
       let check = false;
       (function (a) {
