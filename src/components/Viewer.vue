@@ -45,20 +45,20 @@
       </Transition>
 
       <Transition name="out-fade">
-        <div v-if="currentStep == 99">
-          <div
-            class="button"
-            id="restartBtn"
-            @click="restart()"
-            @touchstart="restart()"
-          >
-            Restart
-          </div>
-
-          <div id="colorEditor">
-            <div class="color silver" @click="changeColor('silver')"></div>
-            <div class="color gold" @click="changeColor('gold')"></div>
-          </div>
+        <div
+          v-if="currentStep == 99"
+          class="button"
+          id="restartBtn"
+          @click="restart()"
+          @touchstart="restart()"
+        >
+          Restart
+        </div>
+      </Transition>
+      <Transition name="out-fade">
+        <div v-if="currentStep == 99" id="colorEditor">
+          <div class="color silver" @click="changeColor('silver')"></div>
+          <div class="color gold" @click="changeColor('gold')"></div>
         </div>
       </Transition>
 
@@ -68,6 +68,17 @@
         src=""
         id="api-frame"
       ></iframe>
+      <!-- <video
+        id="videobg"
+        autoplay
+        loop
+        muted
+        width="100%"
+        :class="{ blur: currentStep == 1 }"
+      >
+        <source src="/videos/satinbg.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video> -->
     </div>
 
     <div v-show="!isLoaded" id="loading">
@@ -84,10 +95,18 @@
   </div>
 </template>
 
-<script>
-import camerasPosition from "./config/cameraPositions";
-import contenido from "./config/contenido";
-import sketchfabConfig from "./config/sketchfabConfig";
+<script lang="ts">
+import camerasPosition from "../config/cameraPositions";
+import contenido from "../config/contenido";
+import sketchfabConfig from "../config/sketchfabConfig";
+import Data from "../types/Data";
+//Typescript interface for Windoow
+declare global {
+  interface Window {
+    Sketchfab: any;
+    opera: any;
+  }
+}
 
 export default {
   name: "Viewer",
@@ -101,7 +120,7 @@ export default {
       debugMode: false,
       device: "",
       materials: null,
-    };
+    } as Data;
   },
   mounted() {
     const version = "1.10.1";
@@ -167,26 +186,15 @@ export default {
         window.console.log(camera.target); // [x, y, z]
       });
     },
-    changeColor(color) {
+    changeColor(color: string) {
       let factor = 300;
       let listColors = {
         silver: [1, 1, 1],
         gold: [0.6870308121546249, 0.5731588750675233, 0.2801243652610849],
       };
 
-      // let texture = true;
-      // let oldColor = listColors[color];
-      // let newColor = [0, 0, 0];
-      // if (color == "gold") {
-      //   texture = false;
-      //   for (let n = 0; n < oldColor.length; n++) {
-      //     newColor[n] = Math.pow(oldColor[n] / 255, 2.2); // with gamma conversion
-      //   }
-      // }
-      // console.log(newColor);
-
-      let listModelNodes = [0, 1];
-      let currentMaterial;
+      let listModelNodes: Array<number> = [0, 1];
+      let currentMaterial: any;
       listModelNodes.forEach((r) => {
         currentMaterial = JSON.parse(JSON.stringify(this.materials))[r];
         currentMaterial.channels.AlbedoPBR.texture = false;
@@ -212,7 +220,7 @@ export default {
       return check;
     },
 
-    setCamera(camera, duration) {
+    setCamera(camera: string, duration: number) {
       this.device = this.mobileCheck() ? "mobile" : "desktop";
       this.api.setCameraLookAt(
         camerasPosition[this.device][camera].position,
