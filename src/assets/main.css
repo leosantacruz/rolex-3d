@@ -196,7 +196,7 @@ background: linear-gradient(45deg, rgba(171,171,171,1) 0%, rgba(199,199,199,1) 1
 
 #videobg{
   background-color:#000;
-  opacity: 0.6;
+  opacity: 0.4;
   object-fit: fill;
   position:absolute;
   top: 0;
