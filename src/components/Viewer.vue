@@ -68,7 +68,7 @@
         src=""
         id="api-frame"
       ></iframe>
-      <!-- <video
+      <video
         id="videobg"
         autoplay
         loop
@@ -78,7 +78,7 @@
       >
         <source src="/videos/satinbg.mp4" type="video/mp4" />
         Your browser does not support the video tag.
-      </video> -->
+      </video>
     </div>
 
     <div v-show="!isLoaded" id="loading">
@@ -136,7 +136,7 @@ export default {
     }
 
     client.init(uid, {
-      success: (api) => {
+      success: (api: any) => {
         this.api = api;
         let progressStart = 1300;
         let progressEnd = 760;
