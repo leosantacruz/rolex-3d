@@ -7,4 +7,5 @@ export default interface Data{
     debugMode: boolean,
     device: string,
     materials: any,
+    animationState:boolean
 }

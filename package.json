@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "typescript": "^4.8.2",
-    "vue": "^3.2.37"
+    "vue": "^3.2.37",
+    "webpack-env": "^0.8.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.0.1",

@@ -59,6 +59,10 @@
         <div v-if="currentStep == 99" id="colorEditor">
           <div class="color silver" @click="changeColor('silver')"></div>
           <div class="color gold" @click="changeColor('gold')"></div>
+          <div class="animationToggle" @click="toggleAnimation()">
+            <img v-if="animationState" src="../assets/img/pause.svg" alt="" />
+            <img v-else src="../assets/img/play.svg" alt="" />
+          </div>
         </div>
       </Transition>
 
@@ -120,6 +124,7 @@ export default {
       debugMode: false,
       device: "",
       materials: null,
+      animationState: false,
     } as Data;
   },
   mounted() {
@@ -128,8 +133,8 @@ export default {
     const iframe = document.getElementById("api-frame");
     const client = new window.Sketchfab(version, iframe);
 
-    let uri = window.location.search.substring(1);
-    let params = new URLSearchParams(uri);
+    let url = window.location.search.substring(1);
+    let params = new URLSearchParams(url);
 
     if (params.get("debug")) {
       this.debugMode = true;
@@ -203,6 +208,15 @@ export default {
         currentMaterial.channels.AlbedoPBR.enable = true;
         this.api.setMaterial(currentMaterial);
       });
+    },
+    toggleAnimation() {
+      this.animationState = !this.animationState;
+      this.api.setCurrentAnimationByUID("f746fb7f06a64762bb09f51a9179db69");
+      if (this.animationState) {
+        this.api.play();
+      } else {
+        this.api.pause();
+      }
     },
     mobileCheck() {
       let check = false;

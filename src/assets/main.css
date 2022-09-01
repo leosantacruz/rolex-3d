@@ -150,29 +150,37 @@ height: 100vh;
 
 #colorEditor{
   border:1px solid #FFF;
-  padding: 10px 10px;
+  padding: 10px 30px 10px 30px;
   position:absolute;
   z-index: 10;
   bottom: 20px;
   left: 0;
   right: 0;
   margin:0 auto;
-  width: 150px;
+  width: 130px;
   text-align: center;
   border-radius: 20px;
   backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 #colorEditor .color{
   background-color: red;
   height: 20px;
   width: 20px;
   border-radius: 50%;
-  display: inline-block;
-  margin-right: 20px;
-  margin-left:20px;
   transition:all 0.2s linear;
 }
-#colorEditor .color:hover{
+.animationToggle {
+  margin-top: 5px;
+  height: 30px;
+}
+.animationToggle img{
+  transition:all 0.2s linear;
+
+}
+#colorEditor .color:hover,.animationToggle img:hover{
   cursor:pointer;
 transform:scale(1.2)
 }
