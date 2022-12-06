@@ -18,9 +18,6 @@
         <a target="_blank" href="https://ibisdev.tech/"
           ><img src="/img/ibisdev.svg" width="70"
         /></a>
-        <a target="_blank" href="https://www.biefferendering.com/">
-          <img src="/img/bieffe.png" width="70"
-        /></a>
       </div>
       <Transition name="slide-fade">
         <div
@@ -57,12 +54,11 @@
       </Transition>
       <Transition name="out-fade">
         <div v-if="currentStep == 99" id="colorEditor">
-          <div class="color silver" @click="changeColor('silver')"></div>
-          <div class="color gold" @click="changeColor('gold')"></div>
-          <div class="animationToggle" @click="toggleAnimation()">
-            <img v-if="animationState" src="../assets/img/pause.svg" alt="" />
-            <img v-else src="../assets/img/play.svg" alt="" />
+          <div id="popupAR" v-if="showPopupAR">
+            <h4>Please scan the following QR code with your phone camera</h4>
+            <img src="../assets/img/qr.png" />
           </div>
+          <img @click="showAR()" src="../assets/img/ar.svg" width="40" />
         </div>
       </Transition>
 
@@ -125,11 +121,12 @@ export default {
       device: "",
       materials: null,
       animationState: false,
+      showPopupAR: false,
     } as Data;
   },
   mounted() {
     const version = "1.10.1";
-    const uid = "897a00cc1d564033968004b0e5fe5d20"; //3D MODEL
+    const uid = "5fcdee479ca049e78a1070e87499b103"; //3D MODEL
     const iframe = document.getElementById("api-frame");
     const client = new window.Sketchfab(version, iframe);
 
@@ -241,6 +238,14 @@ export default {
         camerasPosition[this.device][camera].target,
         duration
       );
+    },
+    showAR() {
+      if (!this.mobileCheck()) {
+        this.showPopupAR = !this.showPopupAR;
+      } else {
+        window.location.href =
+          "https://sketchfab.com/models/5fcdee479ca049e78a1070e87499b103/ar-redirect";
+      }
     },
   },
 };
