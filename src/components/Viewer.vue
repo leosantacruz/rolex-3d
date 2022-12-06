@@ -62,12 +62,7 @@
         </div>
       </Transition>
 
-      <iframe
-        title="Ibisdev demo"
-        :class="{ noClickeable: currentStep < 99, blur: currentStep == 1 }"
-        src=""
-        id="api-frame"
-      ></iframe>
+      <iframe title="Ibisdev demo" src="" id="api-frame"></iframe>
       <video
         id="videobg"
         autoplay
@@ -175,6 +170,7 @@ export default {
       }
     },
     restart() {
+      console.log("restargting.");
       this.currentStep = 0;
       this.setCamera("front", 3);
     },
