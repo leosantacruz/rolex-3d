@@ -13,7 +13,11 @@
       Device: {{ device }}
     </div>
 
-    <div v-show="isLoaded">
+    <div
+      v-show="isLoaded"
+      id="container"
+      :style="{ 'background-image': 'url(' + background + ')' }"
+    >
       <div id="logos">
         <a target="_blank" href="https://ibisdev.tech/"
           ><img src="/img/ibisdev.svg" width="70"
@@ -62,8 +66,14 @@
         </div>
       </Transition>
 
-      <iframe title="Ibisdev demo" src="" id="api-frame"></iframe>
-      <video
+      <iframe
+        :class="{ noClickeable: currentStep < 2 }"
+        title="Ibisdev demo"
+        src=""
+        id="api-frame"
+      ></iframe>
+
+      <!-- <video
         id="videobg"
         autoplay
         loop
@@ -73,7 +83,7 @@
       >
         <source src="/videos/satinbg.mp4" type="video/mp4" />
         Your browser does not support the video tag.
-      </video>
+      </video> -->
     </div>
 
     <div v-show="!isLoaded" id="loading">
@@ -117,11 +127,13 @@ export default {
       materials: null,
       animationState: false,
       showPopupAR: false,
+      background:
+        "https://static.vecteezy.com/system/resources/previews/002/823/445/original/black-abstract-background-and-golden-lines-vector.jpg",
     } as Data;
   },
   mounted() {
     const version = "1.10.1";
-    const uid = "5fcdee479ca049e78a1070e87499b103"; //3D MODEL
+    const uid = "e47ea11768e649f3a79b13485a147f05"; //3D MODEL
     const iframe = document.getElementById("api-frame");
     const client = new window.Sketchfab(version, iframe);
 
@@ -130,6 +142,10 @@ export default {
 
     if (params.get("debug")) {
       this.debugMode = true;
+    }
+
+    if (params.get("background")) {
+      this.background = params.get("background");
     }
 
     client.init(uid, {
@@ -240,7 +256,7 @@ export default {
         this.showPopupAR = !this.showPopupAR;
       } else {
         window.location.href =
-          "https://sketchfab.com/models/5fcdee479ca049e78a1070e87499b103/ar-redirect";
+          "https://sketchfab.com/models/" + uid + "/ar-redirect";
       }
     },
   },
