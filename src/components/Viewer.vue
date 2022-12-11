@@ -105,6 +105,7 @@ import camerasPosition from "../config/cameraPositions";
 import contenido from "../config/contenido";
 import sketchfabConfig from "../config/sketchfabConfig";
 import Data from "../types/Data";
+
 //Typescript interface for Windoow
 declare global {
   interface Window {
