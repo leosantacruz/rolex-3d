@@ -126,7 +126,7 @@ export default {
   },
   mounted() {
     const version = "1.10.1";
-    const uid = "5fcdee479ca049e78a1070e87499b103"; //3D MODEL
+    const uid = "4aa068a8721a4fd892ab8f94e1109c64"; //3D MODEL
     const iframe = document.getElementById("api-frame");
     const client = new window.Sketchfab(version, iframe);
 
@@ -260,7 +260,7 @@ export default {
         this.showPopupAR = !this.showPopupAR;
       } else {
         window.location.href =
-          "https://sketchfab.com/models/5fcdee479ca049e78a1070e87499b103/ar-redirect";
+          "https://sketchfab.com/models/4aa068a8721a4fd892ab8f94e1109c64/ar-redirect";
       }
     },
   },
