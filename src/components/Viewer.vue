@@ -63,7 +63,10 @@
       </Transition>
 
       <iframe
-        :class="{ noClickeable: currentStep < 99, blur: currentStep == 1 }"
+        :class="{
+          noClickeable: currentStep < 99 && !debugMode,
+          blur: currentStep == 1,
+        }"
         title="Ibisdev demo"
         src=""
         id="api-frame"
@@ -222,7 +225,7 @@ export default {
         this.api.setCameraConstraints({
           useCameraConstraints: true,
           useZoomConstraints: true,
-          zoomIn: 0.22,
+          zoomIn: 0.59,
         });
       } else {
         this.api.setCameraConstraints({
