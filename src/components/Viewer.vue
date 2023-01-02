@@ -183,9 +183,10 @@ export default {
       this.setCamera("front", 3);
     },
     hideHint() {
+      this.cameraLimit(false);
+
       this.currentStep = 99;
       this.setCamera("last", 2);
-      this.cameraLimit(true);
     },
     getCamera() {
       this.api.getCameraLookAt(function (err, camera) {
@@ -251,6 +252,7 @@ export default {
     },
 
     setCamera(camera: string, duration: number) {
+      console.log(camera);
       this.device = this.mobileCheck() ? "mobile" : "desktop";
       this.api.setCameraLookAt(
         camerasPosition[this.device][camera].position,
