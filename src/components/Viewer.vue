@@ -183,7 +183,7 @@ export default {
       this.setCamera("front", 3);
     },
     hideHint() {
-      this.cameraLimit(false);
+      this.cameraLimit(true);
 
       this.currentStep = 99;
       this.setCamera("last", 2);
