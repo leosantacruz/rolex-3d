@@ -13,11 +13,7 @@
       Device: {{ device }}
     </div>
 
-    <div
-      v-show="isLoaded"
-      id="container"
-      :style="{ 'background-image': 'url(' + background + ')' }"
-    >
+    <div v-show="isLoaded">
       <div id="logos">
         <a target="_blank" href="https://ibisdev.tech/"
           ><img src="/img/ibisdev.svg" width="70"
@@ -67,13 +63,15 @@
       </Transition>
 
       <iframe
-        :class="{ noClickeable: currentStep < 2 }"
+        :class="{
+          noClickeable: currentStep < 99 && !debugMode,
+          blur: currentStep == 1,
+        }"
         title="Ibisdev demo"
         src=""
         id="api-frame"
       ></iframe>
-
-      <!-- <video
+      <video
         id="videobg"
         autoplay
         loop
@@ -83,7 +81,7 @@
       >
         <source src="/videos/satinbg.mp4" type="video/mp4" />
         Your browser does not support the video tag.
-      </video> -->
+      </video>
     </div>
 
     <div v-show="!isLoaded" id="loading">
@@ -105,7 +103,6 @@ import camerasPosition from "../config/cameraPositions";
 import contenido from "../config/contenido";
 import sketchfabConfig from "../config/sketchfabConfig";
 import Data from "../types/Data";
-
 //Typescript interface for Windoow
 declare global {
   interface Window {
@@ -128,8 +125,6 @@ export default {
       materials: null,
       animationState: false,
       showPopupAR: false,
-      background:
-        "https://static.vecteezy.com/system/resources/previews/002/823/445/original/black-abstract-background-and-golden-lines-vector.jpg",
     } as Data;
   },
   mounted() {
@@ -143,10 +138,6 @@ export default {
 
     if (params.get("debug")) {
       this.debugMode = true;
-    }
-
-    if (params.get("background")) {
-      this.background = params.get("background");
     }
 
     client.init(uid, {
@@ -167,6 +158,7 @@ export default {
             api.getMaterialList((err, mat) => {
               this.materials = mat;
             });
+
             setTimeout(() => {
               this.setCamera("front", 2);
             }, 1200);
@@ -179,7 +171,6 @@ export default {
   methods: {
     nextStep() {
       this.setCamera(this.contenido[this.currentStep].nextCamera, 2);
-
       if (this.currentStep == this.contenido.length - 1) {
         this.currentStep = 0;
       } else {
@@ -187,11 +178,13 @@ export default {
       }
     },
     restart() {
-      console.log("restargting.");
+      this.cameraLimit(false);
       this.currentStep = 0;
       this.setCamera("front", 3);
     },
     hideHint() {
+      this.cameraLimit(true);
+
       this.currentStep = 99;
       this.setCamera("last", 2);
     },
@@ -228,6 +221,20 @@ export default {
         this.api.pause();
       }
     },
+    cameraLimit(value) {
+      if (value) {
+        this.api.setCameraConstraints({
+          useCameraConstraints: true,
+          useZoomConstraints: true,
+          zoomIn: 0.59,
+        });
+      } else {
+        this.api.setCameraConstraints({
+          useCameraConstraints: false,
+          useZoomConstraints: false,
+        });
+      }
+    },
     mobileCheck() {
       let check = false;
       (function (a) {
@@ -245,6 +252,7 @@ export default {
     },
 
     setCamera(camera: string, duration: number) {
+      console.log(camera);
       this.device = this.mobileCheck() ? "mobile" : "desktop";
       this.api.setCameraLookAt(
         camerasPosition[this.device][camera].position,
@@ -257,7 +265,7 @@ export default {
         this.showPopupAR = !this.showPopupAR;
       } else {
         window.location.href =
-          "https://sketchfab.com/models/" + uid + "/ar-redirect";
+          "https://sketchfab.com/models/4aa068a8721a4fd892ab8f94e1109c64/ar-redirect";
       }
     },
   },
