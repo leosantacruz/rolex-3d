@@ -265,7 +265,7 @@ export default {
         this.showPopupAR = !this.showPopupAR;
       } else {
         window.location.href =
-          "https://sketchfab.com/models/4aa068a8721a4fd892ab8f94e1109c64/ar-redirect";
+          "https://sketchfab.com/models/e47ea11768e649f3a79b13485a147f05/ar-redirect";
       }
     },
   },
