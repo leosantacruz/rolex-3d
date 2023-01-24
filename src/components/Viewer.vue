@@ -125,11 +125,11 @@ export default {
       materials: null,
       animationState: false,
       showPopupAR: false,
+      uid: "e40bc8c3f8a44abca9f2245b0f93b7c9",
     } as Data;
   },
   mounted() {
     const version = "1.10.1";
-    const uid = "e47ea11768e649f3a79b13485a147f05"; //3D MODEL
     const iframe = document.getElementById("api-frame");
     const client = new window.Sketchfab(version, iframe);
 
@@ -140,7 +140,7 @@ export default {
       this.debugMode = true;
     }
 
-    client.init(uid, {
+    client.init(this.uid, {
       success: (api: any) => {
         this.api = api;
         let progressStart = 1300;
@@ -214,7 +214,7 @@ export default {
     },
     toggleAnimation() {
       this.animationState = !this.animationState;
-      this.api.setCurrentAnimationByUID("f746fb7f06a64762bb09f51a9179db69");
+      this.api.setCurrentAnimationByUID(this.uid);
       if (this.animationState) {
         this.api.play();
       } else {
@@ -265,7 +265,7 @@ export default {
         this.showPopupAR = !this.showPopupAR;
       } else {
         window.location.href =
-          "https://sketchfab.com/models/e47ea11768e649f3a79b13485a147f05/ar-redirect";
+          "https://sketchfab.com/models/" + this.uid + "/ar-redirect";
       }
     },
   },
