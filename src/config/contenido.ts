@@ -7,7 +7,7 @@ const contenido = [
     },
     {
         titulo: "Dynamic imaging of products",
-        descripcion: "Fully apreciate the details of luxury items",
+        descripcion: "Fully apreciate the details of items",
         nextCamera: "side",
     },
     {
