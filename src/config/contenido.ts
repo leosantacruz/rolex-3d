@@ -1,6 +1,6 @@
 const contenido = [
     {
-        titulo: "Interactive visuals for watches and jewels",
+        titulo: "Interactive visuals for pocket knives",
         descripcion:
             "Real time 3d rendering for institutional and ecommerce websites",
         nextCamera: "closeside",

@@ -50,9 +50,7 @@ height: 100vh;
 #contenido h1 {
   font-size: 50px;
 }
-#contenido p {
-  opacity: 0.7;
-}
+
 #contenido p,
 #contenido h1 {
   color: #fff;
@@ -229,9 +227,7 @@ background: linear-gradient(45deg, rgba(171,171,171,1) 0%, rgba(199,199,199,1) 1
 }
 @media (max-width: 900px) {
 #contenido{margin-left:0px;left:20px}
-  #contenido p {
-  opacity: 0.9;
-}
+
 #logos{left: 20px;}
   #contenido h1{font-size: 30px;}
 
