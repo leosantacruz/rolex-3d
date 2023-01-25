@@ -53,16 +53,34 @@
         </div>
       </Transition>
       <Transition name="out-fade">
-        <div v-if="currentStep == 99" id="colorEditor">
-          <div id="popupAR" v-if="showPopupAR">
-            <h4>Please scan the following QR code with your phone camera</h4>
-            <img src="../assets/img/qr.png" />
+        <div v-if="currentStep == 99" id="actionsMenu">
+          <div class="actionButton">
+            <div
+              class="color"
+              @click="changeColor()"
+              style="background-color: #b1152a"
+            ></div>
           </div>
-          <img @click="showAR()" src="../assets/img/ar.svg" width="40" />
+
+          <div class="actionButton">
+            <div class="color" style="background-color: #6596d0"></div>
+          </div>
+
+          <div class="actionButton">
+            <div class="color" style="background-color: #08aca1"></div>
+          </div>
+          <div class="actionButton">
+            <div id="popupAR" v-if="showPopupAR">
+              <h4>Please scan the following QR code with your phone camera</h4>
+              <img src="../assets/img/qr.png" />
+            </div>
+            <img @click="showAR()" src="../assets/img/ar.svg" width="40" />
+          </div>
         </div>
       </Transition>
 
       <iframe
+        style="background-color: #640b17"
         :class="{
           noClickeable: currentStep < 99 && !debugMode,
           blur: currentStep == 1,
@@ -71,17 +89,6 @@
         src=""
         id="api-frame"
       ></iframe>
-      <video
-        id="videobg"
-        autoplay
-        loop
-        muted
-        width="100%"
-        :class="{ blur: currentStep == 1 }"
-      >
-        <source src="/videos/satinbg.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
     </div>
 
     <div v-show="!isLoaded" id="loading">
@@ -157,6 +164,10 @@ export default {
             this.isLoaded = true;
             api.getMaterialList((err, mat) => {
               this.materials = mat;
+              mat[2].channels.AlbedoPBR.color = [
+                0.6870308121546249, 0.5731588750675233, 0.2801243652610849,
+              ];
+              api.setMaterial(mat[2]);
             });
 
             setTimeout(() => {
@@ -194,23 +205,18 @@ export default {
         window.console.log(camera.target); // [x, y, z]
       });
     },
-    changeColor(color: string) {
-      let factor = 300;
+    changeColor() {
       let listColors = {
         silver: [1, 1, 1],
         gold: [0.6870308121546249, 0.5731588750675233, 0.2801243652610849],
       };
 
-      let listModelNodes: Array<number> = [0, 1];
-      let currentMaterial: any;
-      listModelNodes.forEach((r) => {
-        currentMaterial = JSON.parse(JSON.stringify(this.materials))[r];
-        currentMaterial.channels.AlbedoPBR.texture = false;
-        currentMaterial.channels.AlbedoPBR.factor = 1;
-        currentMaterial.channels.AlbedoPBR.color = listColors[color];
-        currentMaterial.channels.AlbedoPBR.enable = true;
+      let currentMaterial = this.materials[2];
+      console.log(currentMaterial);
+      (currentMaterial.channels.AlbedoPBR.color = [
+        0.6870308121546249, 0.5731588750675233, 0.2801243652610849,
+      ]),
         this.api.setMaterial(currentMaterial);
-      });
     },
     toggleAnimation() {
       this.animationState = !this.animationState;
