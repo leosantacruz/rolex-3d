@@ -7,6 +7,7 @@ background-color:#000
 }
 
 iframe{
+  transition: background-color .3s linear;
   margin: 0;
   border:0;
   outline:0;
@@ -200,7 +201,7 @@ height: 100vh;
   background-color:#FFF;
   border-radius: 10px;
   top: -320px;
-  left: -220px;
+  left: -232px;
   padding: 10px;
 }
 #popupAR img{

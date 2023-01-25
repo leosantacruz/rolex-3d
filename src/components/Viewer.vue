@@ -7,8 +7,9 @@
       <button @click="setCamera('front', 2)">front</button>
       <button @click="setCamera('closeside', 2)">close side</button>
       <button @click="setCamera('side', 2)">side</button>
-      <button @click="changeColor('silver')">silver</button>
-      <button @click="changeColor('gold')">gold</button>
+      <button @click="changeColor('red')">Red</button>
+      <button @click="changeColor('blue')">Blue</button>
+      <button @click="changeColor('green')">Green</button>
       <hr />
       Device: {{ device }}
     </div>
@@ -54,33 +55,32 @@
       </Transition>
       <Transition name="out-fade">
         <div v-if="currentStep == 99" id="actionsMenu">
-          <div class="actionButton">
-            <div
-              class="color"
-              @click="changeColor()"
-              style="background-color: #b1152a"
-            ></div>
+          <div class="actionButton" @click="toggleAnimation()">
+            <img src="../assets/img/play.png" width="40" />
+          </div>
+          <div class="actionButton" @click="changeColor('red')">
+            <div class="color" style="background-color: #b1152a"></div>
           </div>
 
-          <div class="actionButton">
+          <div class="actionButton" @click="changeColor('blue')">
             <div class="color" style="background-color: #6596d0"></div>
           </div>
 
-          <div class="actionButton">
+          <div class="actionButton" @click="changeColor('green')">
             <div class="color" style="background-color: #08aca1"></div>
           </div>
-          <div class="actionButton">
+          <div class="actionButton" @click="showAR()">
             <div id="popupAR" v-if="showPopupAR">
               <h4>Please scan the following QR code with your phone camera</h4>
               <img src="../assets/img/qr.png" />
             </div>
-            <img @click="showAR()" src="../assets/img/ar.svg" width="40" />
+            <img src="../assets/img/ar.svg" width="40" />
           </div>
         </div>
       </Transition>
 
       <iframe
-        style="background-color: #640b17"
+        :style="{ 'background-color': backgroundColor }"
         :class="{
           noClickeable: currentStep < 99 && !debugMode,
           blur: currentStep == 1,
@@ -133,6 +133,7 @@ export default {
       animationState: false,
       showPopupAR: false,
       uid: "e40bc8c3f8a44abca9f2245b0f93b7c9",
+      backgroundColor: "#640B17",
     } as Data;
   },
   mounted() {
@@ -162,12 +163,14 @@ export default {
           api.addEventListener("viewerready", () => {
             this.setCamera("out", 0.3);
             this.isLoaded = true;
+
+            api.setEnvironment({
+              exposure: 1,
+            });
+
             api.getMaterialList((err, mat) => {
               this.materials = mat;
-              mat[2].channels.AlbedoPBR.color = [
-                0.6870308121546249, 0.5731588750675233, 0.2801243652610849,
-              ];
-              api.setMaterial(mat[2]);
+              this.changeColor("red");
             });
 
             setTimeout(() => {
@@ -205,27 +208,39 @@ export default {
         window.console.log(camera.target); // [x, y, z]
       });
     },
-    changeColor() {
+    changeColor(color: string) {
+      let factor = 300;
       let listColors = {
-        silver: [1, 1, 1],
-        gold: [0.6870308121546249, 0.5731588750675233, 0.2801243652610849],
+        red: [138, 13, 13, "#640B17"],
+        blue: [101, 150, 208, "#2E4561"],
+        green: [8, 172, 161, "#044D48"],
       };
 
-      let currentMaterial = this.materials[2];
-      console.log(currentMaterial);
-      (currentMaterial.channels.AlbedoPBR.color = [
-        0.6870308121546249, 0.5731588750675233, 0.2801243652610849,
-      ]),
-        this.api.setMaterial(currentMaterial);
+      let listModelNodes: Array<number> = [0, 1, 2];
+      let currentMaterial: any;
+      let r = 2;
+      currentMaterial = JSON.parse(JSON.stringify(this.materials))[r];
+      currentMaterial.channels.AlbedoPBR.texture = false;
+      currentMaterial.channels.AlbedoPBR.factor = 1;
+      currentMaterial.channels.AlbedoPBR.color = [
+        listColors[color][0] / 255,
+        listColors[color][1] / 255,
+        listColors[color][2] / 255,
+      ];
+      currentMaterial.channels.AlbedoPBR.enable = true;
+      this.api.setMaterial(currentMaterial);
+      this.backgroundColor = listColors[color][3];
     },
     toggleAnimation() {
       this.animationState = !this.animationState;
-      this.api.setCurrentAnimationByUID(this.uid);
-      if (this.animationState) {
-        this.api.play();
-      } else {
-        this.api.pause();
-      }
+      let animationId =
+        this.animationState == true
+          ? "eeb51f4d8d9243fea836ac983a064b68"
+          : "baa1137ae5da4a8c959563846451cf9b";
+      this.api.setCycleMode("one");
+      this.api.setSpeed(8);
+      this.api.setCurrentAnimationByUID(animationId);
+      this.api.play();
     },
     cameraLimit(value) {
       if (value) {

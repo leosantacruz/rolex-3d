@@ -8,5 +8,6 @@ export default interface Data{
     device: string,
     materials: any,
     animationState:boolean,
-    uid:string
+    uid:string,
+    backgroundColor: string
 }
