@@ -68,14 +68,21 @@
                 @click="selectedCategory = 'baseColors'"
                 :class="{ active: selectedCategory == 'baseColors' }"
               >
-                Base Color
+                Base
               </div>
               <div
                 class="category"
                 @click="selectedCategory = 'numberColors'"
                 :class="{ active: selectedCategory == 'numberColors' }"
               >
-                Number dial color
+                Number dial
+              </div>
+              <div
+                class="category"
+                @click="selectedCategory = 'innerColors'"
+                :class="{ active: selectedCategory == 'innerColors' }"
+              >
+                Inner
               </div>
             </div>
             <div class="colors">
@@ -157,19 +164,42 @@ export default {
         baseColor: "",
         numberColor: "",
       },
+      textureUid: "674b799a5df44448890d82c789cf0498",
       colors: {
         baseColors: [
           { hex: "#D9D9D9", r: 217, g: 217, b: 217 },
           { hex: "#FFBF74", r: 255, g: 191, b: 116 },
-          { hex: "#63DCF7", r: 99, g: 220, b: 247 },
-          { hex: "#BBFF64", r: 0, g: 0, b: 0 },
-          { hex: "#FF773D", r: 0, g: 0, b: 0 },
-          { hex: "#D468FA", r: 0, g: 0, b: 0 },
         ],
         numberColors: [
-          { hex: "#D9D9D9", r: 217, g: 217, b: 217 },
-          { hex: "#FFBF74", r: 255, g: 191, b: 116 },
-          { hex: "#63DCF7", r: 99, g: 220, b: 247 },
+          { hex: "#323232", r: 50, g: 50, b: 50 },
+          { hex: "#2F6E49", r: 47, g: 110, b: 73 },
+          { hex: "#233C86", r: 35, g: 60, b: 134 },
+        ],
+        innerColors: [
+          {
+            hex: "#FFFFFF",
+            r: 217,
+            g: 217,
+            b: 217,
+            name: "white",
+            url: "https://i.imgur.com/5myNSsv.jpg",
+          },
+          {
+            hex: "#316E45",
+            r: 255,
+            g: 191,
+            b: 116,
+            name: "green",
+            url: "https://i.imgur.com/gGgmQgU.jpg",
+          },
+          {
+            hex: "#23314B",
+            r: 99,
+            g: 220,
+            b: 247,
+            name: "blue",
+            url: "https://i.imgur.com/qvczqmx.jpg",
+          },
         ],
       },
     } as Data;
@@ -204,6 +234,7 @@ export default {
             this.isLoaded = true;
             api.getMaterialList((err, mat) => {
               this.materials = mat;
+              console.log("Material", mat);
             });
             setTimeout(() => {
               this.setCamera("front", 2);
@@ -238,23 +269,28 @@ export default {
         window.console.log(camera.target); // [x, y, z]
       });
     },
+    changeTexture(url: any) {
+      this.api.updateTexture(url, this.textureUid, (err, textureUid) => {
+        if (!err) {
+          window.console.log("Replaced texture with UID", textureUid);
+          this.textureUid = textureUid;
+        }
+      });
+    },
     changeColor(color: any) {
-      console.log(this.materials);
+      this.changeTexture(color.url);
       let newColor = [color.r / 255, color.g / 255, color.b / 255];
       let watchPart: any = {
         baseColors: 3,
-        numberColors: 2,
+        numberColors: 1,
       };
       let watchPartId = watchPart[this.selectedCategory];
       let currentMaterial = JSON.parse(JSON.stringify(this.materials))[
         watchPartId
       ];
-      currentMaterial.channels.AlbedoPBR.texture = false;
-      currentMaterial.channels.AlbedoPBR.factor = 1;
+
       currentMaterial.channels.AlbedoPBR.color = newColor;
-      currentMaterial.channels.AlbedoPBR.enable = true;
       this.api.setMaterial(currentMaterial);
-      return;
     },
     toggleAnimation() {
       this.animationState = !this.animationState;
@@ -312,7 +348,7 @@ export default {
   position: absolute;
   z-index: 100;
   background-color: rgba(0, 0, 0, 0.1);
-  width: 350px;
+  width: 450px;
   border: 1px solid #ccc;
   color: #fff;
   border-radius: 7px;
