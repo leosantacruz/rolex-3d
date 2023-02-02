@@ -53,18 +53,48 @@
         </div>
       </Transition>
       <Transition name="out-fade">
-        <div v-if="currentStep == 99" id="colorEditor">
-          <div id="popupAR" v-if="showPopupAR">
-            <h4>Please scan the following QR code with your phone camera</h4>
-            <img src="../assets/img/qr.png" />
+        <div v-if="currentStep == 99">
+          <div id="colorEditor">
+            <div id="popupAR" v-if="showPopupAR">
+              <h4>Please scan the following QR code with your phone camera</h4>
+              <img src="../assets/img/qr.jpg" />
+            </div>
+            <img @click="showAR()" src="../assets/img/ar.svg" width="40" />
           </div>
-          <img @click="showAR()" src="../assets/img/ar.svg" width="40" />
+          <div id="colorSelector">
+            <div class="categories">
+              <div
+                class="category"
+                @click="selectedCategory = 'baseColors'"
+                :class="{ active: selectedCategory == 'baseColors' }"
+              >
+                Base Color
+              </div>
+              <div
+                class="category"
+                @click="selectedCategory = 'numberColors'"
+                :class="{ active: selectedCategory == 'numberColors' }"
+              >
+                Number dial color
+              </div>
+            </div>
+            <div class="colors">
+              <div
+                class="color"
+                v-for="color in colors[selectedCategory]"
+                :style="{ background: color['hex'] }"
+                @click="changeColor(color)"
+              ></div>
+            </div>
+          </div>
         </div>
       </Transition>
-
       <iframe
         title="Ibisdev demo"
-        :class="{ noClickeable: currentStep < 99, blur: currentStep == 1 }"
+        :class="{
+          noClickeable: currentStep < 99 && !debugMode,
+          blur: currentStep == 1,
+        }"
         src=""
         id="api-frame"
       ></iframe>
@@ -122,11 +152,31 @@ export default {
       materials: null,
       animationState: false,
       showPopupAR: false,
+      selectedCategory: "baseColors",
+      customizations: {
+        baseColor: "",
+        numberColor: "",
+      },
+      colors: {
+        baseColors: [
+          { hex: "#D9D9D9", r: 217, g: 217, b: 217 },
+          { hex: "#FFBF74", r: 255, g: 191, b: 116 },
+          { hex: "#63DCF7", r: 99, g: 220, b: 247 },
+          { hex: "#BBFF64", r: 0, g: 0, b: 0 },
+          { hex: "#FF773D", r: 0, g: 0, b: 0 },
+          { hex: "#D468FA", r: 0, g: 0, b: 0 },
+        ],
+        numberColors: [
+          { hex: "#D9D9D9", r: 217, g: 217, b: 217 },
+          { hex: "#FFBF74", r: 255, g: 191, b: 116 },
+          { hex: "#63DCF7", r: 99, g: 220, b: 247 },
+        ],
+      },
     } as Data;
   },
   mounted() {
     const version = "1.10.1";
-    const uid = "5fcdee479ca049e78a1070e87499b103"; //3D MODEL
+    const uid = "1cec77596d1e4e9080e1453a78deb5bf"; //3D MODEL
     const iframe = document.getElementById("api-frame");
     const client = new window.Sketchfab(version, iframe);
 
@@ -188,23 +238,23 @@ export default {
         window.console.log(camera.target); // [x, y, z]
       });
     },
-    changeColor(color: string) {
-      let factor = 300;
-      let listColors = {
-        silver: [1, 1, 1],
-        gold: [0.6870308121546249, 0.5731588750675233, 0.2801243652610849],
+    changeColor(color: any) {
+      console.log(this.materials);
+      let newColor = [color.r / 255, color.g / 255, color.b / 255];
+      let watchPart: any = {
+        baseColors: 3,
+        numberColors: 2,
       };
-
-      let listModelNodes: Array<number> = [0, 1];
-      let currentMaterial: any;
-      listModelNodes.forEach((r) => {
-        currentMaterial = JSON.parse(JSON.stringify(this.materials))[r];
-        currentMaterial.channels.AlbedoPBR.texture = false;
-        currentMaterial.channels.AlbedoPBR.factor = 1;
-        currentMaterial.channels.AlbedoPBR.color = listColors[color];
-        currentMaterial.channels.AlbedoPBR.enable = true;
-        this.api.setMaterial(currentMaterial);
-      });
+      let watchPartId = watchPart[this.selectedCategory];
+      let currentMaterial = JSON.parse(JSON.stringify(this.materials))[
+        watchPartId
+      ];
+      currentMaterial.channels.AlbedoPBR.texture = false;
+      currentMaterial.channels.AlbedoPBR.factor = 1;
+      currentMaterial.channels.AlbedoPBR.color = newColor;
+      currentMaterial.channels.AlbedoPBR.enable = true;
+      this.api.setMaterial(currentMaterial);
+      return;
     },
     toggleAnimation() {
       this.animationState = !this.animationState;
@@ -244,7 +294,7 @@ export default {
         this.showPopupAR = !this.showPopupAR;
       } else {
         window.location.href =
-          "https://sketchfab.com/models/5fcdee479ca049e78a1070e87499b103/ar-redirect";
+          "https://sketchfab.com/models/1cec77596d1e4e9080e1453a78deb5bf/ar-redirect";
       }
     },
   },
@@ -256,6 +306,56 @@ export default {
   stroke-dasharray: 1300;
   stroke-dashoffset: v-bind(loadingProgress);
   animation: dash 10s linear infinite;
+}
+
+#colorSelector {
+  position: absolute;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.1);
+  width: 350px;
+  border: 1px solid #ccc;
+  color: #fff;
+  border-radius: 7px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  backdrop-filter: blur(10px);
+}
+.categories {
+  display: flex;
+}
+.categories .category {
+  border-bottom: 3px solid #444;
+  flex: 1 1 0;
+  width: 0;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: #dadada;
+}
+.categories .category:hover {
+  cursor: pointer;
+}
+.categories .category.active {
+  border-color: #fff;
+  color: #fff;
+}
+
+.colors {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(8, 1fr);
+}
+.colors .color {
+  width: 23px;
+  height: 23px;
+  background-color: red;
+  margin: 10px;
+}
+.colors .color:hover {
+  cursor: pointer;
+  opacity: 0.8;
 }
 </style>
 

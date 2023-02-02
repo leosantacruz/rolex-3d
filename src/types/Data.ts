@@ -1,3 +1,7 @@
+interface colors {
+    baseColors: any[],
+    numberColors:any[],
+}
 export default interface Data{
     isLoaded: boolean,
     loadingProgress: number,
@@ -7,5 +11,7 @@ export default interface Data{
     debugMode: boolean,
     device: string,
     materials: any,
-    animationState:boolean
+    animationState:boolean,
+    colors : colors,
+    selectedCategory:string
 }
