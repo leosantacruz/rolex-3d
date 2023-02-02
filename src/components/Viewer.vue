@@ -171,9 +171,9 @@ export default {
           { hex: "#FFBF74", r: 255, g: 191, b: 116 },
         ],
         numberColors: [
-          { hex: "#323232", r: 50, g: 50, b: 50 },
-          { hex: "#2F6E49", r: 47, g: 110, b: 73 },
-          { hex: "#233C86", r: 35, g: 60, b: 134 },
+          { hex: "#323232", r: 10, g: 10, b: 10 },
+          { hex: "#2F6E49", r: 47 * 0.5, g: 110 * 0.5, b: 73 * 0.5 },
+          { hex: "#233C86", r: 35 * 0.5, g: 60 * 0.5, b: 134 * 0.5 },
         ],
         innerColors: [
           {
@@ -278,19 +278,22 @@ export default {
       });
     },
     changeColor(color: any) {
-      this.changeTexture(color.url);
-      let newColor = [color.r / 255, color.g / 255, color.b / 255];
-      let watchPart: any = {
-        baseColors: 3,
-        numberColors: 1,
-      };
-      let watchPartId = watchPart[this.selectedCategory];
-      let currentMaterial = JSON.parse(JSON.stringify(this.materials))[
-        watchPartId
-      ];
+      if (this.selectedCategory == "innerColors") {
+        this.changeTexture(color.url);
+      } else {
+        let newColor = [color.r / 255, color.g / 255, color.b / 255];
+        let watchPart: any = {
+          baseColors: 3,
+          numberColors: 1,
+        };
+        let watchPartId = watchPart[this.selectedCategory];
+        let currentMaterial = JSON.parse(JSON.stringify(this.materials))[
+          watchPartId
+        ];
 
-      currentMaterial.channels.AlbedoPBR.color = newColor;
-      this.api.setMaterial(currentMaterial);
+        currentMaterial.channels.AlbedoPBR.color = newColor;
+        this.api.setMaterial(currentMaterial);
+      }
     },
     toggleAnimation() {
       this.animationState = !this.animationState;
