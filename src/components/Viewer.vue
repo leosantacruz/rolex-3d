@@ -371,7 +371,7 @@ export default {
   background-color: #fff;
   box-shadow: rgb(0 0 0 / 24%) 0px 8px 20px;
 
-  width: 350px;
+  width: 280px;
   color: #000;
   border-radius: 5px;
   margin: 0 auto;
