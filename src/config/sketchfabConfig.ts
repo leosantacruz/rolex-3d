@@ -9,9 +9,7 @@ const sketchfabConfig = {
     ui_watermark: false,
     ui_stop: false,
     ui_color: "ffffff",
-    orbit_constraint_pan: 0,
-    orbit_constraint_yaw_left: null,
-    orbit_constraint_yaw_right: null,
+
     transparent: 0
 }
 

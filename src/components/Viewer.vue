@@ -240,7 +240,6 @@ export default {
   methods: {
     nextStep() {
       this.setCamera(this.contenido[this.currentStep].nextCamera, 2);
-
       if (this.currentStep == this.contenido.length - 1) {
         this.currentStep = 0;
       } else {
@@ -248,12 +247,14 @@ export default {
       }
     },
     restart() {
+      this.cameraLimit(false);
       this.currentStep = 0;
       this.setCamera("front", 3);
     },
     hideHint() {
       this.currentStep = 99;
       this.setCamera("last", 2);
+      this.cameraLimit(true);
     },
     getCamera() {
       this.api.getCameraLookAt(function (err, camera) {
@@ -294,6 +295,20 @@ export default {
         this.api.play();
       } else {
         this.api.pause();
+      }
+    },
+    cameraLimit(value) {
+      if (value) {
+        this.api.setCameraConstraints({
+          useCameraConstraints: true,
+          useZoomConstraints: true,
+          zoomIn: 0.22,
+        });
+      } else {
+        this.api.setCameraConstraints({
+          useCameraConstraints: false,
+          useZoomConstraints: false,
+        });
       }
     },
     mobileCheck() {
