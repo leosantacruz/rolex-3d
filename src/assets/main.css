@@ -85,7 +85,15 @@ iframe.showViewer {
   durations and timing functions.
 */
 
-#iframeContainer {}
+
+.out-fade-enter-active {
+  transition: all 3s ease-out;
+}
+
+.out-fade-enter-from,
+.out-fade-leave-to {
+  opacity: 0;
+}
 
 
 
