@@ -54,12 +54,17 @@
           </div>
 
           <div v-if="currentStep == 99">
+            <img
+              id="shakira"
+              src="https://media2.giphy.com/media/6QeuEWjSsS00spf5I1/giphy.gif?cid=6c09b952sg4kdqzcvpo002zw2t3rxnc78xkxx13khvb5d8dl&rid=giphy.gif&ct=s"
+              alt=""
+            />
             <div id="colorEditor">
               <div id="popupAR" v-if="showPopupAR">
                 <h4>
                   Please scan the following QR code with your phone camera
                 </h4>
-                <img src="../assets/img/qr.jpg" />
+                <img src="../assets/img/qr.png" />
               </div>
               <img @click="showAR()" src="../assets/img/ar.svg" width="40" />
             </div>
@@ -70,21 +75,7 @@
                   @click="selectedCategory = 'baseColors'"
                   :class="{ active: selectedCategory == 'baseColors' }"
                 >
-                  Base
-                </div>
-                <div
-                  class="category"
-                  @click="selectedCategory = 'numberColors'"
-                  :class="{ active: selectedCategory == 'numberColors' }"
-                >
-                  Number dial
-                </div>
-                <div
-                  class="category"
-                  @click="selectedCategory = 'innerColors'"
-                  :class="{ active: selectedCategory == 'innerColors' }"
-                >
-                  Inner
+                  Choose a color
                 </div>
               </div>
               <div class="colors">
@@ -118,7 +109,7 @@
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <circle cx="87" cy="87" r="86" stroke="white" stroke-width="2" />
+        <circle cx="87" cy="87" r="86" stroke="#000" stroke-width="2" />
       </svg>
     </div>
   </div>
@@ -160,7 +151,24 @@ export default {
       colors: {
         baseColors: [
           { hex: "#D9D9D9", r: 217, g: 217, b: 217 },
-          { hex: "#FFBF74", r: 255, g: 191, b: 116 },
+          {
+            hex: "#FFBF74",
+            r: 0.6870308121546249 * 255,
+            g: 0.5731588750675233 * 255,
+            b: 0.2801243652610849 * 255,
+          },
+          {
+            hex: "#FFAB7B",
+            r: 255,
+            g: 121,
+            b: 80,
+          },
+          {
+            hex: "#2A2A2A",
+            r: 20,
+            g: 20,
+            b: 20,
+          },
         ],
         numberColors: [
           { hex: "#323232", r: 10, g: 10, b: 10 },
@@ -281,7 +289,8 @@ export default {
           baseColors: 3,
           numberColors: 1,
         };
-        let watchPartId = watchPart[this.selectedCategory];
+        //let watchPartId = watchPart[this.selectedCategory];
+        let watchPartId = 0;
         let currentMaterial = JSON.parse(JSON.stringify(this.materials))[
           watchPartId
         ];
@@ -342,7 +351,7 @@ export default {
         this.showPopupAR = !this.showPopupAR;
       } else {
         window.location.href =
-          "https://sketchfab.com/models/1cec77596d1e4e9080e1453a78deb5bf/ar-redirect";
+          "https://sketchfab.com/models/674b799a5df44448890d82c789cf0498/ar-redirect";
       }
     },
   },
@@ -362,7 +371,7 @@ export default {
   background-color: #fff;
   box-shadow: rgb(0 0 0 / 24%) 0px 8px 20px;
 
-  width: 450px;
+  width: 350px;
   color: #000;
   border-radius: 5px;
   margin: 0 auto;
@@ -372,9 +381,10 @@ export default {
 }
 .categories {
   display: flex;
+  font-weight: 600;
 }
 .categories .category {
-  border-bottom: 3px solid #eee;
+  border-bottom: 2px solid #eee;
   flex: 1 1 0;
   width: 0;
   text-align: center;
@@ -386,24 +396,31 @@ export default {
   cursor: pointer;
 }
 .categories .category.active {
-  border-color: #00309c;
+  border-color: #eee;
   color: #000;
 }
 
 .colors {
   display: grid;
   grid-template-rows: 1fr;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 }
 .colors .color {
-  width: 23px;
-  height: 23px;
+  width: 33px;
+  height: 33px;
   background-color: red;
   margin: 10px;
 }
 .colors .color:hover {
   cursor: pointer;
   opacity: 0.8;
+}
+
+#shakira {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
 }
 </style>
 

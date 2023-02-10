@@ -97,7 +97,7 @@ iframe {
 }
 
 #lastStep {
-  transition: all 2s linear;
+  transition: all .2s linear;
   margin: 0 auto;
   left: 0;
   right: 0;
@@ -140,7 +140,7 @@ iframe {
 
 
 #loading {
-  background-color: #181818;
+  background-color: #fff;
   height: 100vh;
   justify-content: center;
   align-items: center;
