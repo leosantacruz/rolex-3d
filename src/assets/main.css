@@ -87,7 +87,7 @@ iframe.showViewer {
 
 
 .out-fade-enter-active {
-  transition: all 3s ease-out;
+  transition: all 1s ease-out;
 }
 
 .out-fade-enter-from,
@@ -95,6 +95,15 @@ iframe.showViewer {
   opacity: 0;
 }
 
+
+.slide-fade-enter-active {
+  transition: all 1s ease-out;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  opacity: 0;
+}
 
 
 #lastStep {

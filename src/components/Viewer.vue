@@ -42,17 +42,18 @@
       </Transition>
 
       <Transition name="out-fade">
+        <div
+          v-if="showRestart"
+          class="button"
+          id="restartBtn"
+          @click="restart()"
+          @touchstart="restart()"
+        >
+          Restart
+        </div>
+      </Transition>
+      <Transition name="out-fade">
         <div>
-          <div
-            v-if="currentStep == 99"
-            class="button"
-            id="restartBtn"
-            @click="restart()"
-            @touchstart="restart()"
-          >
-            Restart
-          </div>
-
           <div v-if="currentStep == 99">
             <img
               id="shakira"
@@ -135,6 +136,7 @@ export default {
     return {
       showViewer: false,
       isLoaded: false,
+      showRestart: false,
       loadingProgress: 1300,
       api: "",
       currentStep: 0,
@@ -258,6 +260,7 @@ export default {
       }
     },
     restart() {
+      this.showRestart = false;
       this.currentStep = 0;
 
       this.cameraLimit(false);
@@ -270,6 +273,7 @@ export default {
       this.setCamera("last", 2);
       setTimeout(() => {
         this.cameraLimit(true);
+        this.showRestart = true;
       }, 2000);
     },
     getCamera() {
