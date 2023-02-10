@@ -42,56 +42,59 @@
       </Transition>
 
       <Transition name="out-fade">
-        <div
-          v-if="currentStep == 99"
-          class="button"
-          id="restartBtn"
-          @click="restart()"
-          @touchstart="restart()"
-        >
-          Restart
-        </div>
-      </Transition>
-      <Transition name="out-fade">
-        <div v-if="currentStep == 99">
-          <div id="colorEditor">
-            <div id="popupAR" v-if="showPopupAR">
-              <h4>Please scan the following QR code with your phone camera</h4>
-              <img src="../assets/img/qr.jpg" />
-            </div>
-            <img @click="showAR()" src="../assets/img/ar.svg" width="40" />
+        <div>
+          <div
+            v-if="currentStep == 99"
+            class="button"
+            id="restartBtn"
+            @click="restart()"
+            @touchstart="restart()"
+          >
+            Restart
           </div>
-          <div id="colorSelector">
-            <div class="categories">
-              <div
-                class="category"
-                @click="selectedCategory = 'baseColors'"
-                :class="{ active: selectedCategory == 'baseColors' }"
-              >
-                Base
+
+          <div v-if="currentStep == 99">
+            <div id="colorEditor">
+              <div id="popupAR" v-if="showPopupAR">
+                <h4>
+                  Please scan the following QR code with your phone camera
+                </h4>
+                <img src="../assets/img/qr.jpg" />
               </div>
-              <div
-                class="category"
-                @click="selectedCategory = 'numberColors'"
-                :class="{ active: selectedCategory == 'numberColors' }"
-              >
-                Number dial
-              </div>
-              <div
-                class="category"
-                @click="selectedCategory = 'innerColors'"
-                :class="{ active: selectedCategory == 'innerColors' }"
-              >
-                Inner
-              </div>
+              <img @click="showAR()" src="../assets/img/ar.svg" width="40" />
             </div>
-            <div class="colors">
-              <div
-                class="color"
-                v-for="color in colors[selectedCategory]"
-                :style="{ background: color['hex'] }"
-                @click="changeColor(color)"
-              ></div>
+            <div id="colorSelector">
+              <div class="categories">
+                <div
+                  class="category"
+                  @click="selectedCategory = 'baseColors'"
+                  :class="{ active: selectedCategory == 'baseColors' }"
+                >
+                  Base
+                </div>
+                <div
+                  class="category"
+                  @click="selectedCategory = 'numberColors'"
+                  :class="{ active: selectedCategory == 'numberColors' }"
+                >
+                  Number dial
+                </div>
+                <div
+                  class="category"
+                  @click="selectedCategory = 'innerColors'"
+                  :class="{ active: selectedCategory == 'innerColors' }"
+                >
+                  Inner
+                </div>
+              </div>
+              <div class="colors">
+                <div
+                  class="color"
+                  v-for="color in colors[selectedCategory]"
+                  :style="{ background: color['hex'] }"
+                  @click="changeColor(color)"
+                ></div>
+              </div>
             </div>
           </div>
         </div>
@@ -105,17 +108,6 @@
         src=""
         id="api-frame"
       ></iframe>
-      <video
-        id="videobg"
-        autoplay
-        loop
-        muted
-        width="100%"
-        :class="{ blur: currentStep == 1 }"
-      >
-        <source src="/videos/satinbg.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
     </div>
 
     <div v-show="!isLoaded" id="loading">
@@ -206,7 +198,7 @@ export default {
   },
   mounted() {
     const version = "1.10.1";
-    const uid = "1cec77596d1e4e9080e1453a78deb5bf"; //3D MODEL
+    const uid = "e9e2516643ee4fa9a44184954bc2df2b"; //3D MODEL
     const iframe = document.getElementById("api-frame");
     const client = new window.Sketchfab(version, iframe);
 
@@ -350,35 +342,35 @@ export default {
 #colorSelector {
   position: absolute;
   z-index: 100;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  box-shadow: rgb(0 0 0 / 24%) 0px 8px 20px;
+
   width: 450px;
-  border: 1px solid #ccc;
-  color: #fff;
-  border-radius: 7px;
+  color: #000;
+  border-radius: 5px;
   margin: 0 auto;
   left: 0;
   right: 0;
-  bottom: 10px;
-  backdrop-filter: blur(10px);
+  bottom: 20px;
 }
 .categories {
   display: flex;
 }
 .categories .category {
-  border-bottom: 3px solid #444;
+  border-bottom: 3px solid #eee;
   flex: 1 1 0;
   width: 0;
   text-align: center;
   padding-top: 10px;
   padding-bottom: 10px;
-  color: #dadada;
+  color: #000;
 }
 .categories .category:hover {
   cursor: pointer;
 }
 .categories .category.active {
-  border-color: #fff;
-  color: #fff;
+  border-color: #00309c;
+  color: #000;
 }
 
 .colors {
