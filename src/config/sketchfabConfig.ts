@@ -12,6 +12,7 @@ const sketchfabConfig = {
     orbit_constraint_pan: 0,
     orbit_constraint_yaw_left: null,
     orbit_constraint_yaw_right: null,
+    transparent:0
 }
 
 export default sketchfabConfig

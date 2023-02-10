@@ -95,6 +95,7 @@
         :class="{
           noClickeable: currentStep < 99 && !debugMode,
           blur: currentStep == 1,
+          showViewer: showViewer,
         }"
         src=""
         id="api-frame"
@@ -132,6 +133,7 @@ export default {
   name: "Viewer",
   data() {
     return {
+      showViewer: false,
       isLoaded: false,
       loadingProgress: 1300,
       api: "",
@@ -231,13 +233,14 @@ export default {
         api.start(() => {
           api.addEventListener("viewerready", () => {
             this.setCamera("out", 0.3);
-            this.isLoaded = true;
             api.getMaterialList((err, mat) => {
+              this.isLoaded = true;
               this.materials = mat;
               console.log("Material", mat);
             });
             setTimeout(() => {
               this.setCamera("front", 2);
+              this.showViewer = true;
             }, 1200);
           });
         });
@@ -255,9 +258,12 @@ export default {
       }
     },
     restart() {
-      this.cameraLimit(false);
       this.currentStep = 0;
-      this.setCamera("front", 3);
+
+      this.cameraLimit(false);
+      setTimeout(() => {
+        this.setCamera("front", 3);
+      }, 400);
     },
     hideHint() {
       this.currentStep = 99;
