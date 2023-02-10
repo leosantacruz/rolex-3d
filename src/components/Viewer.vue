@@ -254,7 +254,9 @@ export default {
     hideHint() {
       this.currentStep = 99;
       this.setCamera("last", 2);
-      this.cameraLimit(true);
+      setTimeout(() => {
+        this.cameraLimit(true);
+      }, 2000);
     },
     getCamera() {
       this.api.getCameraLookAt(function (err, camera) {
@@ -302,7 +304,7 @@ export default {
         this.api.setCameraConstraints({
           useCameraConstraints: true,
           useZoomConstraints: true,
-          zoomIn: 0.22,
+          zoomIn: 3.5,
         });
       } else {
         this.api.setCameraConstraints({
