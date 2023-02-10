@@ -55,11 +55,6 @@
       <Transition name="out-fade">
         <div>
           <div v-if="currentStep == 99">
-            <img
-              id="shakira"
-              src="https://media2.giphy.com/media/6QeuEWjSsS00spf5I1/giphy.gif?cid=6c09b952sg4kdqzcvpo002zw2t3rxnc78xkxx13khvb5d8dl&rid=giphy.gif&ct=s"
-              alt=""
-            />
             <div id="colorEditor">
               <div id="popupAR" v-if="showPopupAR">
                 <h4>
