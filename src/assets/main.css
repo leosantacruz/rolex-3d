@@ -1,26 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');body,html{
-  border:0;
-  margin:0;
-overflow: hidden;
-font-family: 'Inter', sans-serif;
-background-color:#000
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap");
+body,
+html {
+  border: 0;
+  margin: 0;
+  overflow: hidden;
+  font-family: "Inter", sans-serif;
 }
 
-iframe{
-  transition: background-color .3s linear;
+iframe {
+  transition: background-color 0.3s linear;
   margin: 0;
-  border:0;
-  outline:0;
+  border: 0;
+  outline: 0;
   width: 100%;
-  height:100vh;
-  z-index:2;
+  height: 100vh;
+  z-index: 2;
   position: absolute;
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffffff+0,000000+100&0.3+0,0+100 */
-background: -moz-linear-gradient(-45deg,  rgba(255,255,255,0.3) 0%, rgba(0,0,0,0) 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(-45deg,  rgba(255,255,255,0.3) 0%,rgba(0,0,0,0) 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(135deg,  rgba(255,255,255,0.3) 0%,rgba(0,0,0,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4dffffff', endColorstr='#00000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
+  background: -moz-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(0, 0, 0, 0) 100%
+  ); /* FF3.6-15 */
+  background: -webkit-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(0, 0, 0, 0) 100%
+  ); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(0, 0, 0, 0) 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4dffffff', endColorstr='#00000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
 ::selection {
@@ -33,16 +45,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4dffffff', e
   background: none;
 }
 
-#container{
-background-size:cover;
-height:100vh;
-width: 100%;
-
+#container {
+  background-size: cover;
+  height: 100vh;
+  width: 100%;
 }
 #contenido {
   width: 40%;
   position: absolute;
-height: 100vh;
+  height: 100vh;
   left: 60px;
   color: #fff;
   z-index: 4;
@@ -55,15 +66,15 @@ height: 100vh;
 #contenido h1 {
   color: #fff;
 }
-.flex-center{
-    display: flex;
+.flex-center {
+  display: flex;
   justify-content: center;
   align-items: center;
 }
 .button {
   margin-top: 20px;
   border: 1px solid #fff;
-  background-color:#FFF;
+  background-color: #fff;
   color: #000;
   text-align: center;
   padding: 10px 20px 10px 20px;
@@ -74,7 +85,7 @@ height: 100vh;
 .button:hover {
   cursor: pointer;
   border-color: #ffffff !important;
-  box-shadow: 0px 0px 10px 0px rgba(255,255,255,.1);
+  box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.1);
 }
 
 /* we will explain what these classes do next! */
@@ -106,7 +117,7 @@ height: 100vh;
   left: 0;
   right: 0;
   position: absolute;
-  z-index:5;
+  z-index: 5;
   width: 100%;
   text-align: center;
   color: #fff;
@@ -118,8 +129,8 @@ height: 100vh;
   align-items: center;
   flex-direction: column;
 }
-#lastStep h1:hover{
-  cursor:pointer
+#lastStep h1:hover {
+  cursor: pointer;
 }
 #lastStep h1 {
   font-size: 25px;
@@ -138,7 +149,6 @@ height: 100vh;
   transform: rotate(-90deg);
 }
 
-
 #loading {
   background-color: #181818;
   height: 100vh;
@@ -151,24 +161,23 @@ height: 100vh;
   pointer-events: none;
 }
 
-
-#restartBtn{
-  position:absolute;
-  z-index:15;
+#restartBtn {
+  position: absolute;
+  z-index: 15;
   right: 20px;
   top: 0px;
 }
-#actionsMenu{
-   position:absolute;
+#actionsMenu {
+  position: absolute;
   z-index: 10;
   bottom: 20px;
   right: 20px;
 }
 
-.actionButton{
-  border:1px solid #FFF;
+.actionButton {
+  border: 1px solid #fff;
   padding: 10px;
-  margin:0 auto;
+  margin: 0 auto;
   text-align: center;
   border-radius: 10px;
   backdrop-filter: blur(10px);
@@ -176,91 +185,129 @@ height: 100vh;
   align-items: center;
   justify-content: space-between;
   margin-top: 20px;
-  height:40px;
-  transition:all 0.2s linear;
+  height: 40px;
+  transition: all 0.2s linear;
   background-color: #fff;
 }
-.actionButton:hover{
-  opacity:0.9;
-  cursor:pointer;
-  transform:scale(0.95)
+.actionButton:hover {
+  opacity: 0.9;
+  cursor: pointer;
+  transform: scale(0.95);
 }
-.actionButton .color{
-  background-color:red;
-  height:30px;
+.actionButton .color {
+  background-color: red;
+  height: 30px;
   width: 30px;
   border-radius: 50%;
-  margin:0 auto
+  margin: 0 auto;
 }
 
-#popupAR{
-  position:absolute;
+#popupAR {
+  position: absolute;
   width: 200px;
-  background-color:#FFF;
+  background-color: #fff;
   border-radius: 10px;
   top: -320px;
   left: -232px;
   padding: 10px;
 }
-#popupAR img{
+#popupAR img {
   width: 100%;
 }
 .animationToggle {
   margin-top: 5px;
   height: 30px;
 }
-.animationToggle img{
-  transition:all 0.2s linear;
+.animationToggle img {
+  transition: all 0.2s linear;
+}
+#qrbutton .color:hover,
+.animationToggle img:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
 
+.gold {
+  background: radial-gradient(
+      ellipse farthest-corner at right bottom,
+      #fedb37 0%,
+      #fdb931 8%,
+      #9f7928 30%,
+      #8a6e2f 40%,
+      transparent 80%
+    ),
+    radial-gradient(
+      ellipse farthest-corner at left top,
+      #ffffff 0%,
+      #ffffac 8%,
+      #d1b464 25%,
+      #5d4a1f 62.5%,
+      #5d4a1f 100%
+    );
 }
-#qrbutton .color:hover,.animationToggle img:hover{
-  cursor:pointer;
-transform:scale(1.2)
-}
-
-.gold{
-   background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
-                radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
-}
-.silver{
-background: linear-gradient(45deg, rgba(171,171,171,1) 0%, rgba(199,199,199,1) 13%, rgba(252,252,252,1) 71%, rgba(218,218,218,1) 100%);
+.silver {
+  background: linear-gradient(
+    45deg,
+    rgba(171, 171, 171, 1) 0%,
+    rgba(199, 199, 199, 1) 13%,
+    rgba(252, 252, 252, 1) 71%,
+    rgba(218, 218, 218, 1) 100%
+  );
 }
 @media (max-width: 900px) {
-#contenido{margin-left:0px;left:20px}
+  #contenido {
+    margin-left: 0px;
+    left: 20px;
+  }
 
-#logos{left: 20px;}
-  #contenido h1{font-size: 30px;}
-
+  #logos {
+    left: 20px;
+  }
+  #contenido h1 {
+    font-size: 30px;
+  }
 }
 
-#videobg{
-  background-color:#000;
+#videobg {
+  background-color: #000;
   opacity: 0.4;
   object-fit: fill;
-  position:absolute;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index:1;
-  transition: all 1s linear;;
+  z-index: 1;
+  transition: all 1s linear;
 }
-#videobg.blur{
-  transform:scale(1.4);
+#videobg.blur {
+  transform: scale(1.4);
 }
 
 /* DEBUG MODE */
 #debug {
-  background-color:rgba(0,0,0,0.9);
+  background-color: rgba(0, 0, 0, 0.9);
   padding: 20px;
-  color:#FFF;
+  color: #fff;
   position: absolute;
   z-index: 1000;
   top: 20px;
-margin: 20px;
-  width:calc( 100% - 40px);
+  margin: 20px;
+  width: calc(100% - 40px);
   box-sizing: border-box;
 }
-#debug button{
+#debug button {
   padding: 10px;
+}
+
+#nav {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+  background: rgba(255, 255, 255, 1);
+
+  padding: 10px;
+  padding-left: 70px;
 }

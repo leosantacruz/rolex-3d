@@ -15,9 +15,9 @@
     </div>
 
     <div v-show="isLoaded">
-      <div id="logos">
-        <a target="_blank" href="https://ibisdev.tech/"
-          ><img src="/img/ibisdev.svg" width="70"
+      <div id="nav">
+        <a target="_blank" href="https://www.troisprime.com/"
+          ><img src="/img/logo.svg" width="170"
         /></a>
       </div>
       <Transition name="slide-fade">
