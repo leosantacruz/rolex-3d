@@ -16,7 +16,7 @@
 
     <div v-show="isLoaded">
       <div id="nav">
-        <a target="_blank" href="https://www.troisprime.com/"
+        <a target="_blank" href="https://www.troisprime.com/us-ca/"
           ><img src="/img/logo.svg" width="170"
         /></a>
       </div>
