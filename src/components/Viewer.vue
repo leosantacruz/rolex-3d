@@ -155,6 +155,17 @@ export default {
           api.addEventListener("viewerready", () => {
             this.setCamera("out", 0.3);
             this.isLoaded = true;
+
+            let options = {
+              zoomIn: 0.2,
+              useZoomConstraints: true,
+            };
+
+            api.setCameraConstraints(options, function (err: string) {});
+            api.setEnableCameraConstraints(true, {
+              preventCameraConstraintsFocus: false,
+            });
+
             api.getMaterialList((err, mat) => {
               this.materials = mat;
             });
